@@ -33,7 +33,7 @@ aws_access_key_id = myid
 aws_secret_access_key = mysecret
 ```
 
-##Delegation
+## Delegation
 Now that you understand how the AWS CLI works, you can apply that model for cross-account calls. As I said before, let’s assume that you already have two accounts called Dev and Prod. You can anticipate that most of the day-to-day development and activity happens in the Dev account, so this will be where the individual IAM user credentials are created and issued. The Prod account will be the one to which secure access is established from the privileged users in the Dev account.
 
 After the accounts are established, perform three tasks:
@@ -42,7 +42,7 @@ Create an IAM role in your Prod account.
 Create a user in your Dev account to assume that IAM role.
 Establish cross-account trust and access from the user in the Dev account to the role in the Prod account.
 
-##Task 1: Create an IAM role in your Prod account (the account that users want to sign in to)
+## Task 1: Create an IAM role in your Prod account (the account that users want to sign in to)
 
 You first will need to create an IAM role in your Prod account with a user that has privileged access to do so. This role will need with it a trust policy, which specifies who is allowed to assume the associated role. (Replace the placeholder ID with your own Dev account ID.)
 
@@ -80,7 +80,7 @@ aws iam attach-role-policy
   --profile prod
   
 ```
-##Task 2: Create a user in the Dev account with permission to assume the IAM role in the Prod account
+## Task 2: Create a user in the Dev account with permission to assume the IAM role in the Prod account
 Now that you have an appropriate IAM role in place, create a policy that allows its principal to assume the role in Prod. Using the ARN returned from Task 1 as the Resource, the policy looks like the following.
 ```sh
 dev_assume_role_prod.json
@@ -130,7 +130,7 @@ aws iam attach-user-policy
 ```
 If nothing is returned, the operation was successful. At this point you have established the permissions needed to achieve cross-account access, and now must configure the AWS CLI to utilize it.
 
-##Task 3: Establish cross-account trust and access from the user to the role
+## Task 3: Establish cross-account trust and access from the user to the role
 Now set the AWS CLI to leverage these changes. To create a profile that will use the role in your Prod account, first apply it to your configuration.
 '''sh
 aws configure set profile.prod.role_arn arn:aws:iam::Prod-account-ID:role/CrossAccountPowerUser
