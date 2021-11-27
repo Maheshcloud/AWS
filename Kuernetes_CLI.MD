@@ -62,6 +62,11 @@ eksctl create nodegroup --cluster=eksdemo1 \
                         --alb-ingress-access 
 ```
 
+Check the current identity to verify that you're using the correct credentials that have permissions for the Amazon EKS cluster:
+```sh
+aws sts get-caller-identity
+```
+
 ## Step 05 - set a clusterrole as cluster-admin
 By default, clusterrolebinding has system:anonymous set which blocks the cluster access. Execute the following command to set a clusterrole as cluster-admin which will give you the required access.
 ```sh
